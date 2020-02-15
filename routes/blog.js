@@ -28,10 +28,15 @@ router.get('/picture/:pictureName', function (req, res, next) {
             res.writeHead(400, {'Content-type':'image/jpg'});
             res.end("no such image");
         }else {
-            res.writeHead(400, {'Content-type': 'image/jpg'});
+            res.writeHead(200, {'Content-type': 'image/jpg'});
             res.end(content);
         }
     })
+});
+
+router.post('/upload', function (req, res, next) {
+    file: File = req.body
+    console.log('test');
 });
 
 
