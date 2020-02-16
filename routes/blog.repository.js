@@ -2,7 +2,7 @@ var mongo = require('mongodb').MongoClient;
 var dotenv = require('dotenv').config();
 const url = process.env.MONGODB_CONNECTIONSTRING;
 
-class BlogRepositry {
+class BlogRepository {
 
 
     async getTravels() {
@@ -27,6 +27,13 @@ class BlogRepositry {
         return resultAsArray;
     }
 
+    async saveBlogEntry(entry) {
+        const client = await this.getClient();
+        let colName = 'blog-' + entry.blog;
+        let coll = client.db('travelblog').collection(colName);
+        return coll.insertOne(entry);
+    }
+
 
 
     async getClient() {
@@ -38,4 +45,4 @@ class BlogRepositry {
 }
 
 
-module.exports = BlogRepositry;
+module.exports = BlogRepository;

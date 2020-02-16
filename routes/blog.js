@@ -1,7 +1,24 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 let BlogRepository = require('./blog.repository');
+let path = require('path');
+let multer = require('multer');
 let fs = require('fs');
+
+const PATH = './public/images';
+
+storage = multer.diskStorage({
+    destination : (req, file, cb) => {
+        cb(null, PATH);
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
+upload = multer({
+    storage: storage
+});
 
 
 /* GET home page. */
@@ -34,9 +51,27 @@ router.get('/picture/:pictureName', function (req, res, next) {
     })
 });
 
-router.post('/upload', function (req, res, next) {
-    file: File = req.body
-    console.log('test');
+router.post('/upload/BlogEntry', function (req, res, next) {
+    let body = req.body;
+    let blogRepo = new BlogRepository();
+    blogRepo.saveBlogEntry(body).then(h => console.log(h));
+    return res.send({
+        success: true
+    });
+});
+
+router.post('/upload/Picture', upload.single('image'), function (req, res) {
+    if (!req.file){
+        console.log('no file is available!');
+        return res.send({
+            success: false
+        });
+    }else{
+        console.log('File is available!');
+        return res.send({
+            filename: req.file.filename
+        })
+    }
 });
 
 
