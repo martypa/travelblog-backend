@@ -74,6 +74,18 @@ router.post('/upload/Picture', upload.single('image'), function (req, res) {
     }
 });
 
+router.post('/upload/createTravel', function (req, res, next) {
+    let body = req.body;
+    let blogRepo = new BlogRepository();
+    blogRepo.createTravel(body).then(h => {
+        if(h == 1){
+            res.send(200);
+        }else{
+            res.send(400);
+        }
+    });
+});
+
 
 
 module.exports = router;
