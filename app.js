@@ -4,10 +4,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var blogRouter = require('./routes/blog');
-var userRouter = require('./routes/user');
 
 var app = express();
 
@@ -25,9 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -36,6 +37,5 @@ app.use(bodyParser.urlencoded({
 
 app.use('/', indexRouter);
 app.use('/blog', blogRouter);
-app.use('/user', userRouter);
 
 module.exports = app;
