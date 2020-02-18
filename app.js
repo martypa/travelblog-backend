@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var blogRouter = require('./routes/blog');
+var userRouter = require('./routes/user');
 
 var app = express();
 
@@ -35,5 +36,6 @@ app.use(bodyParser.urlencoded({
 
 app.use('/', indexRouter);
 app.use('/blog', blogRouter);
+app.use('/user', userRouter);
 
 module.exports = app;

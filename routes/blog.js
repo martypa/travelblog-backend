@@ -79,9 +79,14 @@ router.post('/upload/createTravel', function (req, res, next) {
     let blogRepo = new BlogRepository();
     blogRepo.createTravel(body).then(h => {
         if(h == 1){
-            res.send(200);
+            res.send({
+                status: 200,
+                ok: true,
+            });
+            console.log("create Travel successful");
         }else{
-            res.send(400);
+            res.sendStatus(400);
+            console.log("fail to create new Travel");
         }
     });
 });
