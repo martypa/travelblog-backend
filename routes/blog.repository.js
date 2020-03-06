@@ -1,4 +1,4 @@
-var mongo = require('mongodb').MongoClient;
+var mongo = require('mongodb');
 var dotenv = require('dotenv').config();
 const url = process.env.MONGODB_CONNECTIONSTRING;
 var uuid = require('uuid/v4');
@@ -33,6 +33,14 @@ class BlogRepository {
         let colName = entry.blog;
         let coll = client.db('travelblog').collection(colName);
         return coll.insertOne(entry);
+    }
+
+    async deleteBlogEntry(blogid, collid) {
+        const client = await this.getClient();
+        const coll = client.db('travelblog').collection(collid);
+        return coll.deleteOne({
+            _id: new mongo.ObjectId(blogid)
+        })
     }
 
     async createTravel(travel) {

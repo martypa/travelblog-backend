@@ -139,4 +139,28 @@ router.post('/login', function (req, res, next) {
     });
 });
 
+router.options('/delete/:collid/:blogid', function (req, res, next) {
+/*    let token = req.headers.authorization;
+    var payload;
+    try{
+        payload = jwt.verify(token, jwtKey);
+    }catch (e) {
+        if(e instanceof jwt.JsonWebTokenError) {
+            return res.sendStatus(401);
+        }
+        return res.sendStatus(400);
+    }*/
+    let collid = req.params.collid;
+    let blogid = req.params.blogid;
+    let blogRepo = new BlogRepository();
+    blogRepo.deleteBlogEntry(blogid, collid).then(response => {
+        let h = response;
+        if(h.result.n == 1){
+            res.sendStatus(200);
+        }else{
+            res.sendStatus(400);
+        }
+    });
+});
+
 module.exports = router;
