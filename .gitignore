@@ -179,3 +179,5 @@ fabric.properties
 
 .env
 package-lock.json
+
+public/images/
